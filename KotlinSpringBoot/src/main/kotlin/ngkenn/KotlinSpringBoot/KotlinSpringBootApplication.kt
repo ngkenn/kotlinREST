@@ -1,11 +1,11 @@
 package ngkenn.KotlinSpringBoot
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
+import org.springframework.boot.SpringApplication
 
 @SpringBootApplication
 class KotlinSpringBootApplication
 
 fun main(args: Array<String>) {
-	runApplication<KotlinSpringBootApplication>(*args)
+	SpringApplication.run(KotlinSpringBootApplication::class.java, *args)
 }

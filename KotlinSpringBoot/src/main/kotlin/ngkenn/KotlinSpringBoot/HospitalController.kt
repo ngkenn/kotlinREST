@@ -1,11 +1,6 @@
 package ngkenn.KotlinSpringBoot
 
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/hospitals")
@@ -16,13 +11,16 @@ class HospitalController(val hospitalRepo: HospitalRepo) {
        
     @GetMapping("/{name}")
     fun getByName(@PathVariable(value = "name") name: String): List<Hospital> {
-        val hospitalsByName = this.hospitalRepo.findByName(name)
+        val hospitalsByName = this.hospitalRepo.findHospital(name)
         return hospitalsByName
     }
 
     @PostMapping("/admission")
-    fun admission(@RequestBody admissionRequest: admissionRequest){
-        
+    fun admission(@RequestBody admissionRequest: AdmissionRequest){
+        val hosp = this.hospitalRepo.findHospital(admissionRequest.hospitalName).get(0)
+        hosp.patAdmission(admissionRequest.nPatients)
+        this.hospitalRepo.save(hosp)
+    }
     }
 
 }
